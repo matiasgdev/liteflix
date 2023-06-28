@@ -7,7 +7,7 @@ import Image from 'next/image'
 export const MovieList = () => {
   const {movies} = useMovies()
   return (
-    <section className="max-w-[220px]">
+    <section className="min-w-[220px]">
       <div className="flex items-center gap-x-2 justify-center text-white font-light tracking-[.25rem] mb-6">
         Ver:{' '}
         <span className="flex items-center gap-x-2 font-normal">

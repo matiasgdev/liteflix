@@ -3,6 +3,8 @@
 import AddIcon from '@public/icons/plus.svg'
 import {Profile} from '@/components/Profile'
 import {MovieList} from '@/components/MovieList'
+import {HighlightMovie} from '@/components/HighlightMovie'
+import {Button} from '@/components/Button'
 
 export default function Home() {
   return (
@@ -21,7 +23,16 @@ export default function Home() {
         </div>
         <Profile />
       </header>
-      <MovieList />
+      <section className="flex  justify-between gap-x-32 mt-8 pb-12">
+        <div className="self-end mb-24">
+          <HighlightMovie />
+          <div className="flex items-center gap-x-6">
+            <Button label="Reproducir" />
+            <Button label="Mi lista" icon="plus" />
+          </div>
+        </div>
+        <MovieList />
+      </section>
     </main>
   )
 }
