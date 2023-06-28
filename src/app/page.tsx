@@ -1,8 +1,8 @@
 'use client'
 
-import Image from 'next/image'
 import AddIcon from '@public/icons/plus.svg'
 import {Profile} from '@/components/Profile'
+import {MovieList} from '@/components/MovieList'
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
             Lite<span className="font-light">flix</span>
           </h1>
           <button className="flex items-center gap-3">
-            <Image src={AddIcon} alt="Agregar película" />
+            <AddIcon />
             <span className="text-white leading-none mt-1 tracking-widest">
               Agregar película
             </span>
@@ -21,6 +21,7 @@ export default function Home() {
         </div>
         <Profile />
       </header>
+      <MovieList />
     </main>
   )
 }

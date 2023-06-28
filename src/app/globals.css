@@ -10,14 +10,6 @@ h1 {
   --leter-spacing: .25rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* --aqua: #64EEBC;
-    --white: #FFF;
-    --black: #242424; */
-  }
-}
-
 * {
   box-sizing: border-box;
   padding: 0;

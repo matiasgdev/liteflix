@@ -10,8 +10,8 @@ module.exports = {
       },
       colors: {
         aqua: '#64EEBC',
-        white: ' #FFF',
-        black: ' #242424',
+        white: '#FFF',
+        black: '#242424',
         red: '#F00',
       },
     },
