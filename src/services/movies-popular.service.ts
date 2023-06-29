@@ -14,5 +14,5 @@ export const getPopularMovies = (limit = 4): Promise<Movie[]> =>
 
     const movies: {results: Movie[]} = await response.json()
 
-    resolve(movies.results.slice(0, limit))
+    resolve(movies.results.slice(1, limit + 1))
   })
