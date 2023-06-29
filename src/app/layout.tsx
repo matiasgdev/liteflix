@@ -1,6 +1,7 @@
 import type {Metadata} from 'next'
 import {BebasNeue} from '@/styles/fonts/bebas-neue'
 import './globals.css'
+import {MovieProvider} from '@/context/MoviesContext'
 
 export const metadata: Metadata = {
   title: 'Liteflix',
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
-      <body className={`${BebasNeue.className} bg-black`}>{children}</body>
+      <body className={`relative ${BebasNeue.className} bg-black`}>
+        <MovieProvider>{children}</MovieProvider>
+      </body>
     </html>
   )
 }

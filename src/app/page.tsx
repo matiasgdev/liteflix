@@ -5,10 +5,21 @@ import {Profile} from '@/components/Profile'
 import {MovieList} from '@/components/MovieList'
 import {HighlightMovie} from '@/components/HighlightMovie'
 import {Button} from '@/components/Button'
+import Image from 'next/image'
+import {useHighlightMovie} from '@/hooks/useHighlightMovie'
 
 export default function Home() {
+  const {data: highlightMovie} = useHighlightMovie()
   return (
-    <main className="mt-6 max-w-6xl mr-auto ml-auto">
+    <main className="max-w-6xl mr-auto ml-auto">
+      {highlightMovie ? (
+        <Image
+          src={`https://image.tmdb.org/t/p/original/${highlightMovie?.poster_path}`}
+          alt={highlightMovie?.original_title}
+          className="absolute object-cover inset-0 z-[-10] brightness-50 backdrop-blur-sm saturate-50"
+          fill
+        />
+      ) : null}
       <header className="flex p-2 justify-between items-center">
         <div className="flex items-center gap-16">
           <h1 className="font-bebas text-aqua tracking-widest mt-1">
@@ -23,7 +34,7 @@ export default function Home() {
         </div>
         <Profile />
       </header>
-      <section className="flex  justify-between gap-x-32 mt-8 pb-12">
+      <section className="flex justify-between gap-x-32 mt-8 pb-12">
         <div className="self-end mb-24">
           <HighlightMovie />
           <div className="flex items-center gap-x-6">
