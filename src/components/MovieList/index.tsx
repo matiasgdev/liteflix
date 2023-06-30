@@ -1,19 +1,15 @@
-import {useMovies} from '@/hooks/useMovies'
-import Arrow from '@public/icons/arrow.svg'
-import Star from '@public/icons/star.svg'
-import {PlayButton} from '@components/PlayButton'
 import Image from 'next/image'
+import Star from '@public/icons/star.svg'
+import {useMovies} from '@/hooks/useMovies'
+
+import {PlayButton} from '@components/PlayButton'
+import {MovieCategories} from '@components/MovieCategories'
 
 export const MovieList = () => {
   const {movies} = useMovies()
   return (
     <section className="min-w-[220px]">
-      <div className="flex items-center gap-x-2 justify-center text-white font-light tracking-[.25rem] mb-6">
-        Ver:{' '}
-        <span className="flex items-center gap-x-2 font-normal">
-          Populares <Arrow />
-        </span>
-      </div>
+      <MovieCategories />
       {movies.length ? (
         <ul className="flex flex-col gap-y-6">
           {movies.map(movie => (

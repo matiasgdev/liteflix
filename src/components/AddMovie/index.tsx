@@ -100,12 +100,13 @@ export const AddMovie = () => {
           onChange={event => {
             setFormValues({title: event.target.value})
           }}
+          autoFocus
           className="max-w-[248px] w-full p-y-4 font-bebas text-center text-base text-white bg-transparent outline-none border-b border-white tracking-widest"
         />
         <Button
           label="Subir película"
-          className="bg-white [&_span]:text-black [&_span]:mt-1 flex-row disabled:opacity-50"
           disabled={!(title && file)}
+          className="bg-white [&_span]:text-black [&_span]:mt-1 flex-row disabled:opacity-50"
         />
       </div>
     </Portal>
