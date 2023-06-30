@@ -7,6 +7,7 @@ import {HighlightMovie} from '@/components/HighlightMovie'
 import {Button} from '@/components/Button'
 import Image from 'next/image'
 import {useHighlightMovie} from '@/hooks/useHighlightMovie'
+import {AddMovie} from '@/components/AddMovie'
 
 export default function Home() {
   const {data: highlightMovie} = useHighlightMovie()
@@ -38,11 +39,16 @@ export default function Home() {
         <div className="self-end mb-24">
           <HighlightMovie />
           <div className="flex items-center gap-x-6">
-            <Button label="Reproducir" />
-            <Button label="Mi lista" icon="plus" />
+            <Button label="Reproducir" icon="play" className="bg-black" />
+            <Button
+              label="Mi lista"
+              icon="plus"
+              className="bg-black/50 border-[0.5px] border-white border-solid"
+            />
           </div>
         </div>
         <MovieList />
+        <AddMovie />
       </section>
     </main>
   )
