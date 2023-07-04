@@ -1,3 +1,5 @@
+'use client'
+
 import {Portal} from '@components/Portal'
 import CloseIcon from '@public/icons/close.svg'
 import ClipIcon from '@public/icons/clip.svg'
@@ -9,6 +11,7 @@ import {
   useReducer,
   useRef,
 } from 'react'
+import {useModal} from '@/hooks/useModal'
 import {Button} from '../Button'
 
 const dropAndDragEvents = ['dragenter', 'dragover', 'dragleave', 'drop']
@@ -24,6 +27,8 @@ interface FormValues {
 }
 
 export const AddMovie = () => {
+  const {isAddMovieModalOpen, setModalState} = useModal()
+
   const [{file, title}, setFormValues] = useReducer(
     (oldFormValues: FormValues, newFormValues: Partial<FormValues>) => ({
       ...oldFormValues,
@@ -59,10 +64,15 @@ export const AddMovie = () => {
     })
   }, [])
 
+  if (!isAddMovieModalOpen) return null
+
   return (
     <Portal className="flex items-center justify-center bg-black/60 transition">
       <div className="relative flex flex-col items-center gap-y-12 w-full h-full max-w-[740px] max-h-[440px] bg-black px-16">
-        <CloseIcon className="absolute right-5 top-5 cursor-pointer" />
+        <CloseIcon
+          className="absolute right-5 top-5 cursor-pointer"
+          onClick={() => setModalState({isAddMovieModalOpen: false})}
+        />
         <h4 className="text-xl text-aqua text-center tracking-widest mt-8">
           Agregar película
         </h4>

@@ -1,3 +1,4 @@
+'use client'
 import PlayIcon from '@public/icons/play.svg'
 
 export const PlayButton = () => {

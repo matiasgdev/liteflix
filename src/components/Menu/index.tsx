@@ -1,3 +1,5 @@
+'use client'
+
 import {useReducer} from 'react'
 import MenuIcon from '@public/icons/menu.svg'
 

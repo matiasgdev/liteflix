@@ -1,9 +1,12 @@
-import {useHighlightMovie} from '@/hooks/useHighlightMovie'
+'use client'
+import type {Movie} from '@/models/movie'
 import {formatDate} from '@/utils/formatDate'
 
-export const HighlightMovie = () => {
-  const {data: highlightMovie} = useHighlightMovie()
+interface Props {
+  highlightMovie: Movie
+}
 
+export const HighlightMovie: React.FC<Props> = ({highlightMovie}) => {
   return (
     <div className="self-end max-w-full">
       <h3 className="font-light text-white text-xl tracking-[.25rem]">

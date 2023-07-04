@@ -1,3 +1,4 @@
+'use client'
 import {Menu} from '@components/Menu'
 import NotificationIcon from '@public/notification.svg'
 import ProfileIcon from '@public/profile.svg'

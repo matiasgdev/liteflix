@@ -1,6 +1,8 @@
+'use client'
+
 import Play from '@public/icons/play.svg'
 import Plus from '@public/icons/plus.svg'
-import {isValidElement, DetailedHTMLProps, ButtonHTMLAttributes} from 'react'
+import {DetailedHTMLProps, ButtonHTMLAttributes} from 'react'
 
 type Props = {
   label: string

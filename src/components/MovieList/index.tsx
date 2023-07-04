@@ -1,3 +1,5 @@
+'use client'
+
 import {useState} from 'react'
 import {useMovies} from '@/hooks/useMovies'
 import {useMyMovies} from '@/hooks/useMyMovies'
