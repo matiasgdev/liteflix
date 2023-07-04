@@ -12,6 +12,8 @@ import {
   useRef,
 } from 'react'
 import {useModal} from '@/hooks/useModal'
+import {useAsync} from '@/hooks/useAsync'
+import {addMovie} from '@/services/add-movie.service'
 import {Button} from '../Button'
 
 const dropAndDragEvents = ['dragenter', 'dragover', 'dragleave', 'drop']
@@ -22,21 +24,22 @@ const preventDefaults = (event: Event) => {
 }
 
 interface FormValues {
-  file: File | null
-  title: string | null
+  file: Blob | null
+  title: string
 }
 
 export const AddMovie = () => {
+  const {run, status} = useAsync(null)
   const {isAddMovieModalOpen, setModalState} = useModal()
+  const dropAreaRef = useRef<HTMLDivElement>(null)
 
   const [{file, title}, setFormValues] = useReducer(
     (oldFormValues: FormValues, newFormValues: Partial<FormValues>) => ({
       ...oldFormValues,
       ...newFormValues,
     }),
-    {file: null, title: null},
+    {file: null, title: ''},
   )
-  const dropAreaRef = useRef<HTMLDivElement>(null)
 
   const catchFile = useCallback((file: File) => {
     const reader = new FileReader()
@@ -46,16 +49,31 @@ export const AddMovie = () => {
     }
   }, [])
 
-  const handleInputFileChange: ChangeEventHandler<HTMLInputElement> = event => {
-    const file = event.target.files?.[0] as File
-    catchFile(file)
-  }
+  const handleInputFileChange: ChangeEventHandler<HTMLInputElement> =
+    useCallback(
+      event => {
+        const file = event.target.files?.[0] as File
+        catchFile(file)
+      },
+      [catchFile],
+    )
 
-  const handleOnDrop: DragEventHandler<HTMLDivElement> = event => {
-    event.preventDefault()
-    const file = event.dataTransfer.files[0]
-    catchFile(file)
-  }
+  const handleOnDrop: DragEventHandler<HTMLDivElement> = useCallback(
+    event => {
+      event.preventDefault()
+      const file = event.dataTransfer.files[0]
+      catchFile(file)
+    },
+    [catchFile],
+  )
+
+  const handleOnConfirm = useCallback(() => {
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('image', file as Blob, 'image')
+
+    run(addMovie(formData))
+  }, [title, file, run])
 
   useEffect(() => {
     dropAndDragEvents.forEach(eventName => {
@@ -80,10 +98,12 @@ export const AddMovie = () => {
           role="button"
           aria-label="drag and drop area"
           onDrop={handleOnDrop}
-          className="flex items-center justify-center flex-col w-full min-h-[100px] border border-white border-dashed"
+          className={`flex items-center justify-center flex-col w-full min-h-[100px] border ${
+            file ? 'border-aqua' : 'border-white'
+          } border-dashed`}
         >
           {file ? (
-            <span className="text-white text-[12px]">{file.name}</span>
+            <span className="text-aqua text-[12px]">{file.name}</span>
           ) : null}
           <label
             htmlFor="file"
@@ -107,6 +127,7 @@ export const AddMovie = () => {
         <input
           type="text"
           placeholder="Título"
+          value={title}
           onChange={event => {
             setFormValues({title: event.target.value})
           }}
@@ -115,7 +136,9 @@ export const AddMovie = () => {
         />
         <Button
           label="Subir película"
-          disabled={!(title && file)}
+          type="submit"
+          onClick={handleOnConfirm}
+          disabled={!(title && file) || status === 'pending'}
           className="bg-white [&_span]:text-black [&_span]:mt-1 flex-row disabled:opacity-50"
         />
       </div>
