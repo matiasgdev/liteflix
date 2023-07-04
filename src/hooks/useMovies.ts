@@ -4,7 +4,16 @@ import {useEffect} from 'react'
 import {useAsync} from './useAsync'
 
 export function useMovies() {
-  const {run, status, data} = useAsync<Movie[]>([])
+  const {run, status, data, setData} = useAsync<Movie[]>([], {
+    onSuccess: data => {
+      setData(
+        data.map(movie => ({
+          ...movie,
+          poster_path: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
+        })),
+      )
+    },
+  })
 
   useEffect(() => {
     run(getPopularMovies())

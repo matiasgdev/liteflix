@@ -4,3 +4,8 @@ export const getBaseURL = () => {
 
   return url
 }
+export const getApiURL = () => {
+  const url = new URL('http://localhost:3000')
+
+  return url
+}

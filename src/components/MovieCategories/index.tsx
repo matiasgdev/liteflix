@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react'
+import React, {useRef, useState} from 'react'
 import Arrow from '@public/icons/arrow.svg'
 import Check from '@public/icons/check.svg'
 import {useOnClickOutside} from '@/hooks/useClickOutside'
@@ -8,9 +8,18 @@ const categories = [
   {id: 2, title: 'mis peliculas'},
 ]
 
-export const MovieCategories = () => {
+export interface MovieCategoriesProps {
+  selected: 'populares' | 'mis peliculas'
+  setSelected: React.Dispatch<
+    React.SetStateAction<MovieCategoriesProps['selected']>
+  >
+}
+
+export const MovieCategories: React.FC<MovieCategoriesProps> = ({
+  selected,
+  setSelected,
+}) => {
   const [isOpen, setIsOpenOrClose] = useState(false)
-  const [selected, setSelected] = useState('')
   const containerRef = useRef<HTMLDivElement>(null)
 
   useOnClickOutside(containerRef, () => setIsOpenOrClose(false))
@@ -39,7 +48,7 @@ export const MovieCategories = () => {
               >
                 <span
                   onClick={() => {
-                    setSelected(title)
+                    setSelected(title as Props['selected'])
                     setIsOpenOrClose(!isOpen)
                   }}
                   className={`${
