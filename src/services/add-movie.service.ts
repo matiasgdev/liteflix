@@ -1,8 +1,9 @@
-import axios, {AxiosProgressEvent} from 'axios'
+import axios, {AxiosProgressEvent, CancelTokenSource} from 'axios'
 import {getApiURL} from './base'
 
 interface Options {
   onProgress: (event: AxiosProgressEvent) => void
+  cancelToken: CancelTokenSource
 }
 
 export const addMovie = (data: FormData, opts: Options): Promise<null> =>
@@ -15,6 +16,7 @@ export const addMovie = (data: FormData, opts: Options): Promise<null> =>
         onUploadProgress: event => {
           opts?.onProgress(event)
         },
+        cancelToken: opts.cancelToken.token,
       })
       .catch(() => {
         reject(`Something wrong when trying to POST ${url.pathname}`)

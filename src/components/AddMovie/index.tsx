@@ -1,6 +1,7 @@
 'use client'
 
 import {Portal} from '@components/Portal'
+import axios from 'axios'
 import CloseIcon from '@public/icons/close.svg'
 import ClipIcon from '@public/icons/clip.svg'
 import {
@@ -29,16 +30,12 @@ interface FormValues {
   title: string
 }
 
-export const AddMovie = () => {
-  const [progress, setProgress] = useState(100)
-  const {isAddMovieModalOpen, setModalState} = useModal()
-  const dropAreaRef = useRef<HTMLDivElement>(null)
-  const {run, status} = useAsync(null, {
-    onSuccess: () => {
-      setProgress(100)
-    },
-  })
+const defaultState: FormValues = {
+  file: null,
+  title: '',
+}
 
+export const AddMovie = () => {
   const [{file, title}, setFormValues] = useReducer(
     (oldFormValues: FormValues, newFormValues: Partial<FormValues>) => ({
       ...oldFormValues,
@@ -46,6 +43,16 @@ export const AddMovie = () => {
     }),
     {file: null, title: ''},
   )
+  const [progress, setProgress] = useState(0)
+  const dropAreaRef = useRef<HTMLDivElement>(null)
+  const cancelToken = useRef(axios.CancelToken.source())
+  const {isAddMovieModalOpen, setModalState} = useModal()
+  const {run, status, reset} = useAsync(null, {
+    onSuccess: () => {
+      setProgress(100)
+      setFormValues(defaultState)
+    },
+  })
 
   const catchFile = useCallback((file: File) => {
     const reader = new FileReader()
@@ -73,6 +80,14 @@ export const AddMovie = () => {
     [catchFile],
   )
 
+  const cancelRequest = useCallback(() => {
+    cancelToken.current.cancel()
+    setFormValues(defaultState)
+    reset()
+    cancelToken.current = axios.CancelToken.source()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleOnConfirm = useCallback(() => {
     const formData = new FormData()
     formData.append('title', title)
@@ -85,9 +100,10 @@ export const AddMovie = () => {
             Math.round((event.loaded * 100) / (event.total as number)),
           )
         },
+        cancelToken: cancelToken.current,
       }),
     )
-  }, [title, file, run])
+  }, [title, file, run, cancelToken])
 
   useEffect(() => {
     dropAndDragEvents.forEach(eventName => {
@@ -108,7 +124,7 @@ export const AddMovie = () => {
         <h4 className="text-xl text-aqua text-center tracking-widest mt-8">
           Agregar película
         </h4>
-        {status === 'idle' || status === 'resolved' ? (
+        {status === 'pending' || status === 'resolved' ? (
           <div className="flex flex-col gap-y-2 w-full">
             <p className="text-white tracking-widest mt-2">
               {status === 'resolved' ? 'Cargado' : 'Cargando'} {progress}%
@@ -120,10 +136,19 @@ export const AddMovie = () => {
               />
               <div className="bg-white/50 w-full h-1 z-0" />
             </div>
-            <div className="self-end text-white tracking-widest">
+            <div
+              className={`self-end ${
+                status === 'resolved' ? 'text-aqua' : 'text-white'
+              } tracking-widest cursor-pointer`}
+              onClick={() => {
+                if (status === 'pending') {
+                  cancelRequest()
+                }
+              }}
+            >
               {status === 'resolved'
                 ? '¡Listo!'
-                : status === 'idle'
+                : status === 'pending'
                 ? 'Cancelar'
                 : 'Reintentar'}
             </div>
@@ -137,9 +162,7 @@ export const AddMovie = () => {
               file ? 'border-aqua' : 'border-white'
             } border-dashed`}
           >
-            {file ? (
-              <span className="text-aqua text-[12px]">{file.name}</span>
-            ) : null}
+            {file && <span className="text-aqua text-[12px]">{file.name}</span>}
             <label
               htmlFor="file"
               className="flex items-center gap-x-2 cursor-pointer"
