@@ -18,8 +18,8 @@ export const addMovie = (data: FormData, opts: Options): Promise<null> =>
         },
         cancelToken: opts.cancelToken.token,
       })
-      .catch(() => {
-        reject(`Something wrong when trying to POST ${url.pathname}`)
+      .catch(error => {
+        reject(error)
       })
 
     resolve(null)

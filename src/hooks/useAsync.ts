@@ -9,6 +9,7 @@ interface State<T = any> {
 interface Options<T> {
   onError?: (error: Error) => void
   onSuccess?: (data: T) => void
+  onCancel?: () => void
 }
 
 const defaultInitialState: State = {
@@ -50,6 +51,7 @@ export function useAsync<T = any>(initialState: T, opts: Options<T> = {}) {
           return data
         },
         (error: Error) => {
+          if ((error as any).__CANCEL__) return opts.onCancel?.()
           setError(error)
           opts.onError?.(error)
         },
