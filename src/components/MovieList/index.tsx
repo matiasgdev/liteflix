@@ -8,6 +8,7 @@ import {
   MovieCategories,
   MovieCategoriesProps,
 } from '@components/MovieCategories'
+import {getReleaseYear} from '@/utils/getReleaseYear'
 
 export const MovieList = () => {
   const [selected, setSelected] =
@@ -33,8 +34,8 @@ export const MovieList = () => {
                   key={id}
                   {...{
                     id,
-                    vote_average,
-                    release_date,
+                    voteAverage: vote_average,
+                    releaseDate: getReleaseYear(release_date),
                     title: original_title,
                     src: poster_path,
                   }}
@@ -42,11 +43,13 @@ export const MovieList = () => {
               ),
             )
           : myMovies.length
-          ? myMovies.map(({id, title, imageSrc}) => (
+          ? myMovies.map(({id, title, rate, createdAt, imageSrc}) => (
               <MovieItem
                 key={id}
                 id={id}
                 title={title}
+                releaseDate={getReleaseYear(createdAt)}
+                voteAverage={rate}
                 src={imageSrc as string}
               />
             ))

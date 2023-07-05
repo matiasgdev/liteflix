@@ -6,4 +6,6 @@ export interface MyMovie {
     data: Buffer
   }
   imageSrc?: string
+  rate: number
+  createdAt: Date
 }

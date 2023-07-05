@@ -58,6 +58,8 @@ export const AddMovie = () => {
   })
 
   const catchFile = useCallback((file: File) => {
+    if (!file) return
+
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onloadend = () => {

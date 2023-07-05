@@ -6,15 +6,15 @@ interface MovieItemProps {
   id: string | number
   src: string
   title: string
-  release_date?: string
-  vote_average?: number
+  releaseDate?: string
+  voteAverage?: number
 }
 export const MovieItem: React.FC<MovieItemProps> = ({
   id,
   src,
   title,
-  release_date,
-  vote_average,
+  releaseDate,
+  voteAverage,
 }) => {
   return (
     <li
@@ -30,9 +30,9 @@ export const MovieItem: React.FC<MovieItemProps> = ({
       <div className="absolute bottom-2 inset-x-0 z-30 hidden group-hover:flex justify-between px-4">
         <div className="flex items-center gap-x-1 text-white">
           <Star />
-          <span className="mt-1">{vote_average}</span>
+          <span className="mt-1">{voteAverage}</span>
         </div>
-        <div className="text-white">{release_date?.split('-').shift()}</div>
+        <div className="text-white">{releaseDate}</div>
       </div>
     </li>
   )
