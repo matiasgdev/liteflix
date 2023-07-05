@@ -1,18 +1,24 @@
+import axios, {AxiosProgressEvent} from 'axios'
 import {getApiURL} from './base'
 
-export const addMovie = (data: FormData): Promise<null> =>
+interface Options {
+  onProgress: (event: AxiosProgressEvent) => void
+}
+
+export const addMovie = (data: FormData, opts: Options): Promise<null> =>
   new Promise(async (resolve, reject) => {
     const url = getApiURL()
     url.pathname = '/v1/movies'
 
-    const response = await fetch(url.toString(), {
-      method: 'POST',
-      body: data,
-    })
-
-    if (!response.ok) {
-      reject(`Something wrong when trying to POST ${url.pathname}`)
-    }
+    await axios
+      .post(url.toString(), data, {
+        onUploadProgress: event => {
+          opts?.onProgress(event)
+        },
+      })
+      .catch(() => {
+        reject(`Something wrong when trying to POST ${url.pathname}`)
+      })
 
     resolve(null)
   })

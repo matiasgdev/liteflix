@@ -10,6 +10,7 @@ import {
   useEffect,
   useReducer,
   useRef,
+  useState,
 } from 'react'
 import {useModal} from '@/hooks/useModal'
 import {useAsync} from '@/hooks/useAsync'
@@ -29,9 +30,14 @@ interface FormValues {
 }
 
 export const AddMovie = () => {
-  const {run, status} = useAsync(null)
+  const [progress, setProgress] = useState(100)
   const {isAddMovieModalOpen, setModalState} = useModal()
   const dropAreaRef = useRef<HTMLDivElement>(null)
+  const {run, status} = useAsync(null, {
+    onSuccess: () => {
+      setProgress(100)
+    },
+  })
 
   const [{file, title}, setFormValues] = useReducer(
     (oldFormValues: FormValues, newFormValues: Partial<FormValues>) => ({
@@ -72,7 +78,15 @@ export const AddMovie = () => {
     formData.append('title', title)
     formData.append('image', file as Blob, 'image')
 
-    run(addMovie(formData))
+    run(
+      addMovie(formData, {
+        onProgress: event => {
+          setProgress(
+            Math.round((event.loaded * 100) / (event.total as number)),
+          )
+        },
+      }),
+    )
   }, [title, file, run])
 
   useEffect(() => {
@@ -94,36 +108,58 @@ export const AddMovie = () => {
         <h4 className="text-xl text-aqua text-center tracking-widest mt-8">
           Agregar película
         </h4>
-        <div
-          role="button"
-          aria-label="drag and drop area"
-          onDrop={handleOnDrop}
-          className={`flex items-center justify-center flex-col w-full min-h-[100px] border ${
-            file ? 'border-aqua' : 'border-white'
-          } border-dashed`}
-        >
-          {file ? (
-            <span className="text-aqua text-[12px]">{file.name}</span>
-          ) : null}
-          <label
-            htmlFor="file"
-            className="flex items-center gap-x-2 cursor-pointer"
-          >
-            <div className="flex items-center justify-center">
-              <ClipIcon />
-            </div>{' '}
-            <p className="text-white text-base tracking-widest mt-1">
-              Agregá un archivo o arrastralo y soltalo aquí
+        {status === 'idle' || status === 'resolved' ? (
+          <div className="flex flex-col gap-y-2 w-full">
+            <p className="text-white tracking-widest mt-2">
+              {status === 'resolved' ? 'Cargado' : 'Cargando'} {progress}%
             </p>
-          </label>
-          <input
-            id="file"
-            type="file"
-            accept="image/*"
-            onChange={handleInputFileChange}
-            className="hidden"
-          />
-        </div>
+            <div className="relative flex items-center w-full h-[10px] overflow-hidden">
+              <div
+                className={`absolute h-full bg-aqua z-10`}
+                style={{width: `${progress}%`}}
+              />
+              <div className="bg-white/50 w-full h-1 z-0" />
+            </div>
+            <div className="self-end text-white tracking-widest">
+              {status === 'resolved'
+                ? '¡Listo!'
+                : status === 'idle'
+                ? 'Cancelar'
+                : 'Reintentar'}
+            </div>
+          </div>
+        ) : (
+          <div
+            role="button"
+            aria-label="drag and drop area"
+            onDrop={handleOnDrop}
+            className={`flex items-center justify-center flex-col w-full min-h-[100px] border ${
+              file ? 'border-aqua' : 'border-white'
+            } border-dashed`}
+          >
+            {file ? (
+              <span className="text-aqua text-[12px]">{file.name}</span>
+            ) : null}
+            <label
+              htmlFor="file"
+              className="flex items-center gap-x-2 cursor-pointer"
+            >
+              <div className="flex items-center justify-center">
+                <ClipIcon />
+              </div>{' '}
+              <p className="text-white text-base tracking-widest mt-1">
+                Agregá un archivo o arrastralo y soltalo aquí
+              </p>
+            </label>
+            <input
+              id="file"
+              type="file"
+              accept="image/*"
+              onChange={handleInputFileChange}
+              className="hidden"
+            />
+          </div>
+        )}
         <input
           type="text"
           placeholder="Título"
