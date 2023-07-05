@@ -120,7 +120,7 @@ export const AddMovie = () => {
 
   return (
     <Portal className="flex items-center justify-center bg-black/60 transition">
-      <div className="relative flex flex-col items-center gap-y-12 w-full h-full max-w-[740px] max-h-[440px] bg-black px-16">
+      <div className="relative flex flex-col items-center gap-y-12 w-full h-full max-w-[740px] max-h-[440px] bg-black px-16 animate-fade-up animate-once animate-duration-300">
         <CloseIcon
           className="absolute right-5 top-5 cursor-pointer"
           onClick={() => setModalState({isAddMovieModalOpen: false})}

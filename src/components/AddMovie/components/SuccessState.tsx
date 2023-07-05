@@ -8,7 +8,7 @@ interface Props {
 export const SuccessState = ({title}: Props) => {
   const {setModalState} = useModal()
   return (
-    <div className="flex flex-1 flex-col justify-start items-center mt-16 mb-12">
+    <div className="flex flex-1 flex-col justify-start items-center mt-16 mb-12 animate-jump-in animate-duration-200">
       <h2 className="font-bebas text-[34px] text-aqua tracking-widest mt-1 mb-[52px]">
         Lite<span className="font-light">flix</span>
       </h2>

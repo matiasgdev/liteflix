@@ -19,7 +19,7 @@ export const MovieItem: React.FC<MovieItemProps> = ({
   return (
     <li
       key={id}
-      className={`relative min-h-[146px] rounded overflow-hidden group cursor-pointer`}
+      className={`relative min-h-[146px] rounded overflow-hidden group cursor-pointer animate-fade-down animate-duration-300`}
     >
       <div className="absolute inset-0 z-20 bg-gradient-to-b from-transparent to-[#000]/[0.8] group-hover:bg-[#000]/[0.6]" />
       <Image className="object-cover" alt={title} src={src} fill />
