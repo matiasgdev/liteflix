@@ -21,8 +21,7 @@ export const MovieList = () => {
       <MovieCategories {...{selected, setSelected}} />
       <ul className="flex flex-col gap-y-6">
         {selected === 'populares'
-          ? movies.length &&
-            movies.map(
+          ? movies.map(
               (
                 {id, original_title, release_date, vote_average, poster_path},
                 index,
@@ -40,8 +39,7 @@ export const MovieList = () => {
                 />
               ),
             )
-          : myMovies.length
-          ? myMovies.map(({id, title, rate, createdAt, imageSrc}, index) => (
+          : myMovies.map(({id, title, rate, createdAt, imageSrc}, index) => (
               <MovieItem
                 key={id}
                 {...{
@@ -53,8 +51,7 @@ export const MovieList = () => {
                   src: imageSrc as string,
                 }}
               />
-            ))
-          : null}
+            ))}
       </ul>
     </section>
   )

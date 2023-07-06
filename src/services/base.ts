@@ -1,13 +1,14 @@
-import {getConfig} from '@/utils/getConfig'
-
 export const getMovieURL = (path: string) => {
-  const url = new URL(path, getConfig('MOVIEDB_URL'))
-  url.searchParams.set('api_key', getConfig('MOVIEDB_APIKEY'))
+  const url = new URL(path, process.env.NEXT_PUBLIC_MOVIEDB_URL)
+  url.searchParams.set(
+    'api_key',
+    process.env.NEXT_PUBLIC_MOVIEDB_APIKEY as string,
+  )
 
   return url
 }
 
 export const getApiURL = (path: string) => {
-  const url = new URL(path, getConfig('API_URL'))
+  const url = new URL(path, process.env.NEXT_PUBLIC_API_URL)
   return url
 }
