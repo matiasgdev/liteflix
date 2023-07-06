@@ -48,7 +48,7 @@ export const MovieCategories: React.FC<MovieCategoriesProps> = ({
               >
                 <span
                   onClick={() => {
-                    setSelected(title as Props['selected'])
+                    setSelected(title as MovieCategoriesProps['selected'])
                     setIsOpenOrClose(!isOpen)
                   }}
                   className={`${

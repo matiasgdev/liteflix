@@ -28,7 +28,6 @@ export const MovieItem: React.FC<MovieItemProps> = ({
           opacity: 1,
           transition: {
             type: 'spring',
-            ease: 'easeIn',
             delay: 0.1 * index,
             stiffness: 150,
           },

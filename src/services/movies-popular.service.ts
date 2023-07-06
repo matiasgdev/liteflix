@@ -1,10 +1,9 @@
 import {Movie} from '@/models/movie'
-import {getBaseURL} from './base'
+import {getMovieURL} from './base'
 
 export const getPopularMovies = (limit = 4): Promise<Movie[]> =>
   new Promise(async (resolve, reject) => {
-    const url = getBaseURL()
-    url.pathname = '/3/movie/popular'
+    const url = getMovieURL('/3/movie/popular')
 
     const response = await fetch(url.toString())
 

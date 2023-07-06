@@ -3,9 +3,7 @@ import {getApiURL} from './base'
 
 export const getMyMoviesList = (): Promise<MyMovie[]> =>
   new Promise(async (resolve, reject) => {
-    const url = getApiURL()
-    url.pathname = '/v1/movies'
-
+    const url = getApiURL('/v1/movies')
     const response = await fetch(url.toString())
 
     if (!response.ok) {

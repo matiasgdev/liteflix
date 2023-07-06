@@ -8,8 +8,7 @@ interface Options {
 
 export const addMovie = (data: FormData, opts: Options): Promise<null> =>
   new Promise(async (resolve, reject) => {
-    const url = getApiURL()
-    url.pathname = '/v1/movies'
+    const url = getApiURL('/v1/movies')
 
     await axios
       .post(url.toString(), data, {
@@ -18,9 +17,7 @@ export const addMovie = (data: FormData, opts: Options): Promise<null> =>
         },
         cancelToken: opts.cancelToken.token,
       })
-      .catch(error => {
-        reject(error)
-      })
+      .catch(reject)
 
     resolve(null)
   })
