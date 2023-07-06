@@ -23,10 +23,10 @@ export const Header = () => {
         <Menu />
       </div>
       <div className="flex items-center gap-16">
-        <h1 className="font-bebas text-aqua tracking-widest mt-1">
+        <h1 className="font-bebas text-aqua tracking-widest mt-1  animate-fade-up">
           Lite<span className="font-light">flix</span>
         </h1>
-        <div className="hidden md:block">
+        <div className="hidden md:block animate-fade-down animate-duration-1000">
           <AddMovieButton />
         </div>
       </div>

@@ -14,7 +14,7 @@ export const Menu = () => {
   const toggle = () => setModalState({isMenuOpen: !isMenuOpen})
 
   return (
-    <div>
+    <div className="animate-fade-down">
       <button className="min-w-[36px]" onClick={toggle}>
         {!isMenuOpen ? <MenuIcon /> : <CloseIcon />}
       </button>

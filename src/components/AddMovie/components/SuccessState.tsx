@@ -23,7 +23,9 @@ export const SuccessState = ({title}: Props) => {
       <Button
         label="Ir al home"
         type="submit"
-        onClick={() => setModalState({isAddMovieModalOpen: false})}
+        onClick={() =>
+          setModalState({isAddMovieModalOpen: false, isMenuOpen: false})
+        }
         className="justify-center bg-white [&_span]:text-black [&_span]:mt-1"
       />
     </div>

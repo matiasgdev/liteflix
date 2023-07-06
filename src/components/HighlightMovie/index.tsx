@@ -8,7 +8,7 @@ interface Props {
 
 export const HighlightMovie: React.FC<Props> = ({highlightMovie}) => {
   return (
-    <div className="self-end flex flex-col justify-end items-center mb-4 md:items-start max-w-full text-center min-h-[450px] md:text-left md:min-h-full md:mb-0 gap-y-4 md:gap-y-0">
+    <div className="self-end flex flex-col justify-end items-center mb-4 md:items-start max-w-full text-center min-h-[450px] md:text-left md:min-h-full md:mb-0 gap-y-4 md:gap-y-0 animate-fade animate-duration-1000">
       <h3 className="font-light text-white text-xl tracking-[.25rem]  max-w-[80%] md:max-w-full">
         Disponible desde el{' '}
         <span className="font-normal">
