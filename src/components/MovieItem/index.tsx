@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Star from '@public/icons/star.svg'
+import {motion} from 'framer-motion'
 import {PlayButton} from '../PlayButton'
 
 interface MovieItemProps {
@@ -8,18 +9,35 @@ interface MovieItemProps {
   title: string
   releaseDate?: string
   voteAverage?: number
+  index: number
 }
+
 export const MovieItem: React.FC<MovieItemProps> = ({
-  id,
   src,
   title,
   releaseDate,
   voteAverage,
+  index,
 }) => {
   return (
-    <li
-      key={id}
-      className={`relative min-h-[146px] rounded overflow-hidden group cursor-pointer animate-fade-down animate-duration-300`}
+    <motion.li
+      variants={{
+        hidden: {y: -20, opacity: 0},
+        enter: {
+          y: 0,
+          opacity: 1,
+          transition: {
+            type: 'spring',
+            ease: 'easeIn',
+            delay: 0.1 * index,
+            stiffness: 150,
+          },
+        },
+      }}
+      initial="hidden"
+      animate="enter"
+      exit="hidden"
+      className={`relative min-h-[146px] rounded overflow-hidden group cursor-pointer`}
     >
       <div className="absolute inset-0 z-20 bg-gradient-to-b from-transparent to-[#000]/[0.8] group-hover:bg-[#000]/[0.6]" />
       <Image className="object-cover" alt={title} src={src} fill />
@@ -34,6 +52,6 @@ export const MovieItem: React.FC<MovieItemProps> = ({
         </div>
         <div className="text-white">{releaseDate}</div>
       </div>
-    </li>
+    </motion.li>
   )
 }

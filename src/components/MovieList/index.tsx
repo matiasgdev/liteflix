@@ -23,17 +23,15 @@ export const MovieList = () => {
         {selected === 'populares'
           ? movies.length &&
             movies.map(
-              ({
-                id,
-                original_title,
-                release_date,
-                vote_average,
-                poster_path,
-              }) => (
+              (
+                {id, original_title, release_date, vote_average, poster_path},
+                index,
+              ) => (
                 <MovieItem
                   key={id}
                   {...{
                     id,
+                    index,
                     voteAverage: vote_average,
                     releaseDate: getReleaseYear(release_date),
                     title: original_title,
@@ -43,14 +41,17 @@ export const MovieList = () => {
               ),
             )
           : myMovies.length
-          ? myMovies.map(({id, title, rate, createdAt, imageSrc}) => (
+          ? myMovies.map(({id, title, rate, createdAt, imageSrc}, index) => (
               <MovieItem
                 key={id}
-                id={id}
-                title={title}
-                releaseDate={getReleaseYear(createdAt)}
-                voteAverage={rate}
-                src={imageSrc as string}
+                {...{
+                  id,
+                  title,
+                  index,
+                  voteAverage: rate,
+                  releaseDate: getReleaseYear(createdAt),
+                  src: imageSrc as string,
+                }}
               />
             ))
           : null}

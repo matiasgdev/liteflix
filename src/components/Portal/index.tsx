@@ -16,7 +16,7 @@ export const Portal: React.FC<
   }
 
   return createPortal(
-    <div className={`fixed inset-0 z-[100] ${className}`} role="presentation">
+    <div className={className} role="presentation">
       {children}
     </div>,
     portalRoot,
