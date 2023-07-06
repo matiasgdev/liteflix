@@ -16,6 +16,7 @@ import {
 import {useModal} from '@/hooks/useModal'
 import {useAsync} from '@/hooks/useAsync'
 import {addMovie} from '@/services/add-movie.service'
+import {useMediaQuery} from '@/hooks/useMediaQuery'
 import {Button} from '../Button'
 import {SuccessState} from './components/SuccessState'
 
@@ -45,6 +46,7 @@ export const AddMovie = () => {
     defaultState,
   )
   const [progress, setProgress] = useState(0)
+  const isDesktop = useMediaQuery('screen and (min-width: 768px)')
   const dropAreaRef = useRef<HTMLDivElement>(null)
   const cancelToken = useRef(axios.CancelToken.source())
   const {isAddMovieModalOpen, setModalState} = useModal()
@@ -121,10 +123,14 @@ export const AddMovie = () => {
   if (!isAddMovieModalOpen) return null
 
   return (
-    <Portal className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 transition">
-      <div className="relative flex flex-col items-center gap-y-12 w-full h-full max-w-[740px] max-h-[440px] bg-black px-16 animate-fade-up animate-once animate-duration-300">
+    <Portal className="fixed inset-0 z-[100] top-[3.5rem] md:top-0 flex items-center justify-center md:bg-black/60 transition">
+      <div
+        className={`relative flex flex-col items-center gap-y-12 w-full h-full md:max-w-[740px] md:max-h-[440px] bg-black px-16 ${
+          isDesktop ? 'animate-fade-up' : 'animate-fade-left'
+        } animate-once animate-duration-300`}
+      >
         <CloseIcon
-          className="absolute right-5 top-5 cursor-pointer"
+          className="hidden md:block absolute right-5 top-5 cursor-pointer"
           onClick={() => setModalState({isAddMovieModalOpen: false})}
         />
         {status === 'resolved' ? (
@@ -163,7 +169,7 @@ export const AddMovie = () => {
                   className={`self-end ${
                     status == 'rejected'
                       ? 'text-white'
-                      : progress === 10
+                      : progress === 100
                       ? 'text-aqua'
                       : 'text-white'
                   } tracking-[0.25rem] cursor-pointer font-bold`}
@@ -197,13 +203,15 @@ export const AddMovie = () => {
                 )}
                 <label
                   htmlFor="file"
-                  className="flex items-center gap-x-2 cursor-pointer"
+                  className="flex items-center gap-x-3 cursor-pointer"
                 >
                   <div className="flex items-center justify-center">
                     <ClipIcon />
                   </div>{' '}
                   <p className="text-white text-base tracking-[0.25rem] mt-1">
-                    Agregá un archivo o arrastralo y soltalo aquí
+                    {`Agregá un archivo ${
+                      isDesktop ? 'o arrastralo y soltalo aquí' : ''
+                    }`}
                   </p>
                 </label>
                 <input
@@ -225,17 +233,27 @@ export const AddMovie = () => {
               autoFocus
               className="max-w-[248px] w-full p-y-4 font-bebas text-center text-base text-white bg-transparent outline-none border-b border-white tracking-[0.25rem]"
             />
-            <Button
-              label="Subir película"
-              type="submit"
-              onClick={handleOnConfirm}
-              disabled={
-                !(title && file) ||
-                status === 'pending' ||
-                status === 'rejected'
-              }
-              className="bg-white [&_span]:text-black [&_span]:mt-1 flex-row disabled:opacity-50"
-            />
+            <div className="flex flex-col gap-y-4">
+              <Button
+                label="Subir película"
+                type="submit"
+                onClick={handleOnConfirm}
+                disabled={
+                  !(title && file) ||
+                  status === 'pending' ||
+                  status === 'rejected'
+                }
+                className="bg-white justify-center [&_span]:text-black [&_span]:mt-1 flex-row disabled:opacity-50"
+              />
+              <Button
+                label="Salir"
+                onClick={() => {
+                  cancelRequest()
+                  setModalState({isAddMovieModalOpen: false})
+                }}
+                className="bg-transparent border border-white border-solid justify-center [&_span]:text-white [&_span]:mt-1 flex-row disabled:opacity-50 md:hidden"
+              />
+            </div>
           </>
         )}
       </div>

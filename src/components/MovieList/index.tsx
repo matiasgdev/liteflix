@@ -17,7 +17,7 @@ export const MovieList = () => {
   const {movies: myMovies} = useMyMovies()
 
   return (
-    <section className="min-w-[220px]  min-h-[calc(100vh-60px-2rem)]">
+    <section className="min-w-[220px]  md:min-h-[calc(100vh-60px-2rem)] px-12 md:px-0">
       <MovieCategories {...{selected, setSelected}} />
       <ul className="flex flex-col gap-y-6">
         {selected === 'populares'

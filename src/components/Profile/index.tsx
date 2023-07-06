@@ -5,9 +5,13 @@ import ProfileIcon from '@public/profile.svg'
 
 export const Profile = () => {
   return (
-    <div className="hidden md:flex md:gap-x-12 md:items-center">
-      <Menu />
-      <NotificationIcon />
+    <div className="flex gap-x-12 items-center">
+      <div className="hidden md:block">
+        <Menu />
+      </div>
+      <div className="hidden md:block">
+        <NotificationIcon />
+      </div>
       <ProfileIcon />
     </div>
   )

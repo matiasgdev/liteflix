@@ -8,6 +8,7 @@ export interface ModalActions {
 
 export interface ModalContextState {
   isAddMovieModalOpen: boolean
+  isMenuOpen: boolean
 }
 
 const movieReducer = (
@@ -27,6 +28,7 @@ interface Props {
 
 const defaultState: ModalContextState = {
   isAddMovieModalOpen: false,
+  isMenuOpen: false,
 }
 
 export const ModalProvider: React.FC<React.PropsWithChildren<Props>> = ({
