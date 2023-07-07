@@ -27,9 +27,9 @@ export const MovieItemSkeleton: React.FC<MovieItemSkeletonProps> = ({
 export const MovieItemSkeletons = () => (
   <>
     {[
-      <MovieItemSkeleton index={1} />,
-      <MovieItemSkeleton index={2} />,
-      <MovieItemSkeleton index={3} />,
+      <MovieItemSkeleton key={0.3} index={0.3} />,
+      <MovieItemSkeleton key={0.5} index={0.5} />,
+      <MovieItemSkeleton key={0.8} index={0.8} />,
     ]}
   </>
 )
