@@ -1,6 +1,7 @@
 'use client'
 
 import type {Movie} from '@/models/movie'
+import type {MyMovie} from '@/models/own-movie'
 import React, {createContext, useReducer, useRef} from 'react'
 
 export interface MovieActions {
@@ -10,6 +11,7 @@ export interface MovieActions {
 export interface MovieContextState {
   highlight?: Movie
   favourites?: Movie[]
+  myMovies?: MyMovie[]
 }
 
 const movieReducer = (
@@ -34,14 +36,9 @@ export const MovieProvider: React.FC<React.PropsWithChildren<Props>> = ({
   initialState = {},
 }) => {
   const initialStateRef = useRef({...initialState, ...defaultState})
-  const [{favourites, highlight}, setState] = useReducer(
-    movieReducer,
-    initialStateRef.current,
-  )
+  const [state, setState] = useReducer(movieReducer, initialStateRef.current)
 
-  return (
-    <Provider value={{favourites, highlight, setState}}>{children}</Provider>
-  )
+  return <Provider value={{...state, setState}}>{children}</Provider>
 }
 
 MovieContext.displayName = 'MovieContext'

@@ -19,6 +19,9 @@ import {addMovie} from '@/services/add-movie.service'
 import {useMediaQuery} from '@/hooks/useMediaQuery'
 import {Button} from '../Button'
 import {SuccessState} from './components/SuccessState'
+import {useMovieContext} from '@/hooks/useMovieContext'
+import {MyMovie} from '@/models/own-movie'
+import {normalizeImgToBase64} from '@/utils/normalizeImgToBase64'
 
 const dropAndDragEvents = ['dragenter', 'dragover', 'dragleave', 'drop']
 
@@ -47,12 +50,22 @@ export const AddMovie = () => {
   )
   const [progress, setProgress] = useState(0)
   const isDesktop = useMediaQuery('screen and (min-width: 768px)')
+  const {setState: setMoviesContext, myMovies} = useMovieContext()
   const dropAreaRef = useRef<HTMLDivElement>(null)
   const cancelToken = useRef(axios.CancelToken.source())
   const {setModalState} = useModal()
-  const {run, status, reset} = useAsync(null, {
-    onSuccess: () => {
+  const {run, status, reset} = useAsync<MyMovie | null>(null, {
+    onSuccess: movie => {
       setProgress(100)
+      setMoviesContext({
+        myMovies: [
+          ...(myMovies ? myMovies : ([] as MyMovie[])),
+          {
+            ...(movie as MyMovie),
+            imageSrc: normalizeImgToBase64(movie as MyMovie),
+          },
+        ],
+      })
     },
     onCancel: () => {
       setProgress(0)

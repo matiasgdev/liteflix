@@ -1,19 +1,19 @@
 import {MyMovie} from '@/models/own-movie'
 import {getMyMoviesList} from '@/services/movies-my'
+import {normalizeImgToBase64} from '@/utils/normalizeImgToBase64'
 import {useEffect} from 'react'
 import {useAsync} from './useAsync'
+import {useMovieContext} from './useMovieContext'
 
 export function useMyMovies() {
-  const {run, status, data, setData} = useAsync<MyMovie[]>([], {
+  const {myMovies, setState} = useMovieContext()
+  const {run, status} = useAsync<MyMovie[]>([], {
     onSuccess: movies => {
-      setData(
-        movies.map(movie => ({
-          ...movie,
-          imageSrc: `data:image/png;base64,${Buffer.from(
-            movie.image.data,
-          ).toString('base64')}`,
-        })),
-      )
+      movies = movies.map(movie => {
+        movie.imageSrc = normalizeImgToBase64(movie)
+        return movie
+      })
+      setState({myMovies: movies})
     },
   })
 
@@ -22,5 +22,5 @@ export function useMyMovies() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return {movies: data, status}
+  return {movies: myMovies, status}
 }
