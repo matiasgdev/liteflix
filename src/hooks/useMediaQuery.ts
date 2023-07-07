@@ -12,7 +12,13 @@ export function useMediaQuery(query: string): boolean {
 
   useLayoutEffect(() => {
     const queryList = matchMedia(query)
-    setMatch(queryList.matches)
+    const handler = (e: MediaQueryListEvent) => {
+      setMatch(e.matches)
+    }
+    queryList.addEventListener('change', handler)
+    return () => {
+      queryList.removeEventListener('change', handler)
+    }
   }, [query])
 
   return matches
