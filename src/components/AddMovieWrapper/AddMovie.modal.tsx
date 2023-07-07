@@ -136,7 +136,7 @@ export const AddMovie = () => {
   return (
     <Portal className="fixed inset-0 z-[100] top-[3.5rem] md:top-0 flex items-center justify-center md:bg-black/60 transition">
       <div
-        className={`relative flex flex-col items-center gap-y-12 w-full h-full md:max-w-[740px] md:max-h-[440px] bg-black px-16 ${
+        className={`relative flex flex-col items-center gap-y-12 w-full h-full md:max-w-[740px] md:max-h-[440px] bg-black px-4 md:px-16 ${
           isDesktop ? 'animate-fade-up' : 'animate-fade-left'
         } animate-once animate-duration-300`}
       >

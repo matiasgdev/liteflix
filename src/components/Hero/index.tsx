@@ -12,7 +12,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({highlightMovie}) => {
   return (
-    <section className="flex flex-col justify-between gap-x-32 mt-8 pb-12 md:flex-row">
+    <section className="flex flex-col justify-between mt-8 gap-x-4 pb-12 md:flex-row">
       <div className="md:self-end mb-12 md:mb-24 max-w-full">
         <HighlightMovie highlightMovie={highlightMovie} />
         <motion.div

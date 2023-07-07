@@ -40,7 +40,7 @@ export const Menu = () => {
                   <NotificationIcon />
                 </div>
               </header>
-              <ul className="flex flex-col gap-y-12 md:gap-y-6 mb-8">
+              <ul className="flex flex-col gap-y-[40px] md:gap-y-6 mb-8">
                 {menuItems.map(({id, title}) => (
                   <li key={id}>
                     <button className="text-white tracking-[.25rem] text-left antialiased">

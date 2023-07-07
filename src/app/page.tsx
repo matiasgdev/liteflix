@@ -7,7 +7,7 @@ import {getHighlightMovie} from '@/services/movie-highlight.service'
 export default async function Home() {
   const highlightMovie = await getHighlightMovie()
   return (
-    <main className="max-w-6xl max-h-[80vh] md:min-h-screen md:max-h-max mr-auto ml-auto">
+    <main className="max-w-6xl max-h-[80vh] md:min-h-screen md:max-h-max mr-auto ml-auto px-4">
       <ModalProvider
         background={<PosterBackground highlightMovie={highlightMovie} />}
       >

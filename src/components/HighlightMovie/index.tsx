@@ -17,7 +17,12 @@ export const HighlightMovie: React.FC<Props> = ({highlightMovie}) => {
             : null}
         </span>
       </h3>
-      <h2 className="max-w-full text-aqua font-bold text-[76px] md:text-[120px] tracking-[.25rem] md:truncate md:max-w-[800px] leading-none md:leading-normal">
+      <h2
+        className="max-w-full text-aqua font-bold  tracking-[.25rem] md:truncate md:max-w-[800px] leading-none md:leading-normal"
+        style={{
+          fontSize: 'clamp(56px, 7vw, 120px)',
+        }}
+      >
         {highlightMovie?.original_title}
       </h2>
     </div>

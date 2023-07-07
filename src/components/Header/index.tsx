@@ -15,8 +15,10 @@ export const Header = () => {
     <motion.header
       variants={headerVariants}
       animate={anyModalIsOpen && !isDesktop ? 'open' : 'closed'}
-      className={`flex px-6 py-4 md:p-0 md:pt-6 justify-between items-center max-h-[60px] md:bg-transparent ${
-        anyModalIsOpen && !isDesktop ? 'fixed top-0 w-screen z-[100]' : ''
+      className={`flex py-4 md:p-0 md:pt-6 justify-between items-center max-h-[60px] md:bg-transparent ${
+        anyModalIsOpen && !isDesktop
+          ? 'fixed left-0 right-0 top-0 w-screen z-[100] px-4'
+          : ''
       }`}
     >
       <div className="md:hidden">

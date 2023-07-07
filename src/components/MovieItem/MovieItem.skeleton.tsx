@@ -14,7 +14,7 @@ export const MovieItemSkeleton: React.FC<MovieItemSkeletonProps> = ({
       initial="hidden"
       animate="enter"
       exit="hidden"
-      className="h-[146px] bg-black rounded max-w-sm w-full mx-auto"
+      className="h-[146px] bg-black rounded max-w-sm w-full mx-auto  border border-solid border-white/60"
     >
       <div className="animate-pulse h-[146px] flex flex-col gap-y-4 justify-end items-center px-4 pb-4">
         <div className="rounded-full bg-slate-700 h-10 w-10" />
