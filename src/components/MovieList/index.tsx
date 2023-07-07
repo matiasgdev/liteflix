@@ -9,19 +9,21 @@ import {
   MovieCategoriesProps,
 } from '@components/MovieCategories'
 import {getReleaseYear} from '@/utils/getReleaseYear'
+import {MovieItemSkeletons} from '../MovieItem/MovieItem.skeleton'
 
 export const MovieList = () => {
   const [selected, setSelected] =
     useState<MovieCategoriesProps['selected']>('populares')
-  const {movies} = useMovies()
-  const {movies: myMovies} = useMyMovies()
+  const {movies, status} = useMovies()
+  const {movies: myMovies, status: myMoviesStatus} = useMyMovies()
 
   return (
     <section className="min-w-[220px]  md:min-h-[calc(100vh-60px-2rem)] px-12 md:px-0">
       <MovieCategories {...{selected, setSelected}} />
       <ul className="flex flex-col gap-y-6">
-        {selected === 'populares'
-          ? movies.map(
+        {selected === 'populares' ? (
+          status === 'resolved' ? (
+            movies.map(
               (
                 {id, original_title, release_date, vote_average, poster_path},
                 index,
@@ -39,19 +41,26 @@ export const MovieList = () => {
                 />
               ),
             )
-          : myMovies.map(({id, title, rate, createdAt, imageSrc}, index) => (
-              <MovieItem
-                key={id}
-                {...{
-                  id,
-                  title,
-                  index,
-                  voteAverage: rate,
-                  releaseDate: getReleaseYear(createdAt),
-                  src: imageSrc as string,
-                }}
-              />
-            ))}
+          ) : (
+            <MovieItemSkeletons />
+          )
+        ) : myMoviesStatus === 'resolved' ? (
+          myMovies.map(({id, title, rate, createdAt, imageSrc}, index) => (
+            <MovieItem
+              key={id}
+              {...{
+                id,
+                title,
+                index,
+                voteAverage: rate,
+                releaseDate: getReleaseYear(createdAt),
+                src: imageSrc as string,
+              }}
+            />
+          ))
+        ) : (
+          <MovieItemSkeletons />
+        )}
       </ul>
     </section>
   )

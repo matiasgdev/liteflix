@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Star from '@public/icons/star.svg'
 import {motion} from 'framer-motion'
 import {PlayButton} from '../PlayButton'
+import {movieVariants} from './MovieItem.variants'
 
 interface MovieItemProps {
   id: string | number
@@ -21,18 +22,7 @@ export const MovieItem: React.FC<MovieItemProps> = ({
 }) => {
   return (
     <motion.li
-      variants={{
-        hidden: {y: -20, opacity: 0},
-        enter: {
-          y: 0,
-          opacity: 1,
-          transition: {
-            type: 'spring',
-            delay: 0.3 * index,
-            stiffness: 150,
-          },
-        },
-      }}
+      variants={movieVariants(index)}
       initial="hidden"
       animate="enter"
       exit="hidden"
