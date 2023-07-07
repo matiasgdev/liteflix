@@ -25,7 +25,7 @@ export const PosterBackground: React.FC<PosterBackgroundProps> = ({
       onLoadingComplete={() => {
         setModalState({isBackgroundLoading: false})
       }}
-      priority={false}
+      priority={true}
     />
   ) : null
 }

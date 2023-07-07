@@ -1,5 +1,5 @@
 import {MyMovie} from '@/models/own-movie'
-import {getMyMoviesList} from '@/services/movies-my'
+import {getMyMoviesList} from '@/services/movies-my.service'
 import {normalizeImgToBase64} from '@/utils/normalizeImgToBase64'
 import {useEffect} from 'react'
 import {useAsync} from './useAsync'
