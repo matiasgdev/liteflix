@@ -17,11 +17,11 @@ import {useModal} from '@/hooks/useModal'
 import {useAsync} from '@/hooks/useAsync'
 import {addMovie} from '@/services/add-movie.service'
 import {useMediaQuery} from '@/hooks/useMediaQuery'
-import {Button} from '../Button'
-import {SuccessState} from './components/SuccessState'
+import {normalizeImgToBase64} from '@/utils/normalizeImgToBase64'
 import {useMovieContext} from '@/hooks/useMovieContext'
 import {MyMovie} from '@/models/own-movie'
-import {normalizeImgToBase64} from '@/utils/normalizeImgToBase64'
+import {SuccessState} from './components/SuccessState'
+import {Button} from '../Button'
 
 const dropAndDragEvents = ['dragenter', 'dragover', 'dragleave', 'drop']
 

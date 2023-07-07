@@ -11,13 +11,6 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
-          rel="preload"
-          crossOrigin="anonymous"
-        />
-      </head>
       <body className={`relative ${BebasNeue.className} bg-black`}>
         <div id="portal" />
         <MovieProvider>{children}</MovieProvider>
