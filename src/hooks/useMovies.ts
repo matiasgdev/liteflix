@@ -1,5 +1,6 @@
 import {Movie} from '@/models/movie'
 import {getPopularMovies} from '@/services/movies-popular.service'
+import {getImageResource} from '@/utils/getImageResource'
 import {useEffect} from 'react'
 import {useAsync} from './useAsync'
 
@@ -9,7 +10,7 @@ export function useMovies() {
       setData(
         data.map(movie => ({
           ...movie,
-          poster_path: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
+          poster_path: getImageResource(movie.poster_path),
         })),
       )
     },

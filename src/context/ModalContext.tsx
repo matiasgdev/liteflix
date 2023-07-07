@@ -9,6 +9,7 @@ export interface ModalActions {
 export interface ModalContextState {
   isAddMovieModalOpen: boolean
   isMenuOpen: boolean
+  isBackgroundLoading: boolean
 }
 
 const movieReducer = (
@@ -24,15 +25,18 @@ const Provider = ModalContext.Provider
 
 interface Props {
   initialState?: ModalContextState
+  background: React.ReactElement
 }
 
 const defaultState: ModalContextState = {
   isAddMovieModalOpen: false,
   isMenuOpen: false,
+  isBackgroundLoading: true,
 }
 
 export const ModalProvider: React.FC<React.PropsWithChildren<Props>> = ({
   children,
+  background,
   initialState = {},
 }) => {
   const initialStateRef = useRef({...initialState, ...defaultState})
@@ -41,7 +45,18 @@ export const ModalProvider: React.FC<React.PropsWithChildren<Props>> = ({
     initialStateRef.current,
   )
 
-  return <Provider value={{...state, setModalState}}>{children}</Provider>
+  return (
+    <Provider value={{...state, setModalState}}>
+      <>
+        <div
+          className={`${state.isBackgroundLoading ? 'invisible' : 'visible'}`}
+        >
+          {background}
+        </div>
+        {state.isBackgroundLoading ? null : children}
+      </>
+    </Provider>
+  )
 }
 
 ModalContext.displayName = 'ModalContext'

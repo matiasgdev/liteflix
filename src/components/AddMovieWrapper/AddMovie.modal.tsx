@@ -49,7 +49,7 @@ export const AddMovie = () => {
   const isDesktop = useMediaQuery('screen and (min-width: 768px)')
   const dropAreaRef = useRef<HTMLDivElement>(null)
   const cancelToken = useRef(axios.CancelToken.source())
-  const {isAddMovieModalOpen, setModalState} = useModal()
+  const {setModalState} = useModal()
   const {run, status, reset} = useAsync(null, {
     onSuccess: () => {
       setProgress(100)
@@ -119,8 +119,6 @@ export const AddMovie = () => {
       document.body.addEventListener(eventName, preventDefaults, false)
     })
   }, [])
-
-  if (!isAddMovieModalOpen) return null
 
   return (
     <Portal className="fixed inset-0 z-[100] top-[3.5rem] md:top-0 flex items-center justify-center md:bg-black/60 transition">
@@ -230,7 +228,6 @@ export const AddMovie = () => {
               onChange={event => {
                 setFormValues({title: event.target.value})
               }}
-              autoFocus
               className="max-w-[248px] w-full p-y-4 font-bebas text-center text-base text-white bg-transparent outline-none border-b border-white tracking-[0.25rem]"
             />
             <div className="flex flex-col gap-y-4">
